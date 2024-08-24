@@ -10,8 +10,7 @@ const Home = () => {
 
         </h1>
         <p className="desc text-center">
-            DictionAIry is a free & open prompt collection to get the most out of 
-            modern AI chatbots.
+            Promptopia is an open source AI prompting tool for discovering and sharing creative prompts.
         </p>
 
         <Feed />
