@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { signIn,signOut, useSession, getProviders } from 'next-auth/react';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const nav = () => {
 
@@ -14,13 +14,13 @@ const nav = () => {
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     useEffect(() => {
-        const setProviders = async () => {
+        const setUpProviders = async () => {
             const response = await getProviders();
 
             setProviders(response);
         }
 
-        setProviders();
+        setUpProviders();
     }, [])
 
     return (
@@ -96,24 +96,41 @@ const nav = () => {
                                 >
                                     My Profile
                                 </Link>
-                            </div>
-                        )} 
-                    </div>
-                    ): (
-                        <>
-                            {providers && 
-                            Object.values(providers).map((provider) => (
-                                <button 
-                                    type="button"
-                                    key={provider.name}
-                                    onClick={() => signIn(provider.id)}
-                                    className='black_btn'
+                                <Link
+                                    href="/create-prompt"
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDropdown(false)}
                                 >
-                                Sign In
+                                    Create Prompt
+                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setToggleDropdown(false);
+                                        signOut();
+                                    }}
+                                    className="mt-5 w-full black_btn"
+                                >
+                                    Sign Out
                                 </button>
-                            ))}
-                        </>
-                    )}
+                            </div>
+                        )}
+                    </div>
+                ): (
+                    <>
+                        {providers && 
+                        Object.values(providers).map((provider) => (
+                            <button 
+                                type="button"
+                                key={provider.name}
+                                onClick={() => signIn(provider.id)}
+                                className='black_btn'
+                            >
+                            Sign In
+                            </button>
+                        ))}
+                    </>
+                )}
             </div>
         </nav>
     )
